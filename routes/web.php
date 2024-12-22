@@ -22,7 +22,7 @@ Route::get('/welcome', function () {
 });
 
 Route::get('/posts', function () {
-    $posts = Post::with(['author', 'category'])->get();
+    $posts = Post::latest()->get();
     return view('posts', ['title' => 'Check Our Blog', 'posts' => $posts]);
 });
 
@@ -40,11 +40,11 @@ Route::get('/pricelist', function () {
 });
 
 Route::get('/authors/{user:username}', function(User $user) {
-    // $post =  Post::find($slug);
+    // $posts =  $user->posts->load('category', 'author');
     return view('posts', ['title' => count($user->posts) . ' Articles by ' . $user->name, 'posts' => $user->posts]);
 });
 
 Route::get('/categories/{category:slug}', function(Category $category) {
-    // $post =  Post::find($slug);
+    // $posts =  $category->posts->load('category', 'author');
     return view('posts', ['title' => 'Category : ' . $category->name, 'posts' => $category->posts]);
 });

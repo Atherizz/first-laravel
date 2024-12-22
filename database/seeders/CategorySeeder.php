@@ -15,17 +15,27 @@ class CategorySeeder extends Seeder
     {
         Category::create([
             'name' => 'PUBG Mobile',
-            'slug' => 'pubg-mobile'
+            'slug' => 'pubg-mobile',
+            'color' => 'brown'
         ]);
 
         Category::create([
             'name' => 'Mobile Legends',
-            'slug' => 'mobile-legends'
+            'slug' => 'mobile-legends',
+            'color' => 'blue'
         ]);
 
         Category::create([
             'name' => 'Valorant',
-            'slug' => 'valorant-valo'
+            'slug' => 'valorant-valo',
+            'color' => 'red'
+
+        ]);
+
+        Category::create([
+            'name' => 'Marvel Rivals',
+            'slug' => 'marvel-rivals',
+            'color' => 'yellow'
         ]);
     }
 }
