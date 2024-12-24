@@ -29,10 +29,13 @@
                 <input type="hidden" name="author" value="{{ request('author')}}">
             @endif
             </div>
-
-
-        <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
-            <div class="grid gap-8 lg:grid-cols-2">
+            <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+            @if (request('search'))
+            <a href="/posts" class="block text-blue-600 hover:underline">Show All Blog</a>
+        @endif
+        
+        {{ $posts->links() }}
+        <div class="my-4 grid gap-8 lg:grid-cols-2">
     @forelse ($posts as $article)  
                 <article class="p-6 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
                     <div class="flex justify-between items-center mb-5 text-gray-500">
@@ -62,6 +65,7 @@
         <p class="font-semibold text-xl my-4">blog not found!</p>
         <a href="/posts" class="block text-blue-600 hover:underline">&laquo; Back to home</a>
     </div>
+
     @endforelse
 </div>  
 </div>

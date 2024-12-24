@@ -22,8 +22,7 @@ Route::get('/welcome', function () {
 });
 
 Route::get('/posts', function () {
-    
-    return view('posts', ['title' => 'Check Our Blog', 'posts' => Post::filter(request(['search', 'category', 'author']))->latest()->get()]);
+    return view('posts', ['title' => 'Check Our Blog', 'posts' => Post::filter(request(['search', 'category', 'author']))->latest()->paginate(14)->withQueryString()]);
 });
 
 Route::get('/posts/{post:slug}', function(Post $post) {
