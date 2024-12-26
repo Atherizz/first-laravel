@@ -12,9 +12,9 @@ Route::get('/', function () {
     return view('home', ['title' => 'Home Page']);
 });
 
-Route::get('/about', function () {
-    $data = ['name' => 'Savero Athallah','title' => 'About Page'];
-    return view('about', compact('data'));
+Route::get('/order', function () {
+    $data = ['name' => 'Savero Athallah','title' => 'Order Page'];
+    return view('order', compact('data'));
 });
 
 Route::get('/welcome', function () {
