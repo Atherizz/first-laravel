@@ -16,26 +16,30 @@ class CategorySeeder extends Seeder
         Category::create([
             'name' => 'PUBG Mobile',
             'slug' => 'pubg-mobile',
-            'color' => 'brown'
+            'color' => 'brown',
+            'point' => 'uc'
         ]);
 
         Category::create([
             'name' => 'Mobile Legends',
             'slug' => 'mobile-legends',
-            'color' => 'blue'
+            'color' => 'blue',
+            'point' => 'diamonds'
         ]);
 
         Category::create([
             'name' => 'Valorant',
             'slug' => 'valorant-valo',
-            'color' => 'red'
+            'color' => 'red',
+            'point' => 'vp'
 
         ]);
 
         Category::create([
             'name' => 'Marvel Rivals',
             'slug' => 'marvel-rivals',
-            'color' => 'yellow'
+            'color' => 'yellow',
+            'point' => 'lattices'
         ]);
     }
 }

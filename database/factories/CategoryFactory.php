@@ -18,8 +18,10 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => implode(' ', fake()->words(2)),
-            'slug' => Str::slug(fake()->sentence(2))
+            'name' => fake()->words(2, true), 
+            'slug' => Str::slug(fake()->words(2, true)), 
+            'color' => fake()->hexColor(), 
+            'point' => fake()->numberBetween(10, 1000)
         ];
     }
 }

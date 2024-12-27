@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Post;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
+use App\Models\Price;
 use App\Models\Category;
 use Illuminate\Database\Seeder;
 
@@ -25,7 +26,12 @@ class DatabaseSeeder extends Seeder
             ([ 
             User::all(),
             Category::all()
-            ])->create();      
+            ])->create();    
+
+        Price::factory(count: 32)->recycle
+            ([
+            Category::all()
+            ])->create();
 
     }
 }
