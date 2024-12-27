@@ -1,23 +1,30 @@
 <x-layout>
-    <x-slot:title>{{ $data['title']}}</x-slot:title>
+    <x-slot:title>{{$title}}</x-slot:title>
       <body class="bg-gray-100">
           <!-- Main Content -->
           <div class="container mx-auto p-6">
               <h1 class="text-3xl font-bold mb-6">Order Form</h1>
               <div class="bg-white p-6 rounded-lg shadow-md">
-                  <form>
+                  <form method="GET" action="{{ route('order.form') }}">
                       <!-- Game Type -->
                       <div class="mb-4">
                           <label class="block text-gray-700 text-sm font-bold mb-2" for="game-type">Jenis Game</label>
                           <select id="game-type" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                              <option value="valorant">Valorant</option>
-                              <option value="mobile-legend">Mobile Legend</option>
+                            <option value="" disabled selected>Pilih Game</option>
+                            <option value="valorant" {{ request('game') == 'valorant' ? 'selected' : '' }}>Valorant</option>
+                            <option value="mobile-legend" {{ request('game') == 'mobile-legend' ? 'selected' : '' }}>Mobile Legends</option>
+                            <option value="pubg" {{ request('game') == 'pubg' ? 'selected' : '' }}>PUBG Mobile</option>
+                            <option value="marvel-rivals" {{ request('game') == 'marvel-rivals' ? 'selected' : '' }}>Marvel Rivals</option>
                           </select>
                       </div>
                       <!-- Topup Amount -->
                       <div class="mb-4">
                           <label class="block text-gray-700 text-sm font-bold mb-2" for="topup-amount">Jumlah Topup</label>
-                          <input id="topup-amount" type="number" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Masukkan jumlah topup"/>
+                          <select id="game-type" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            @foreach ($info as $item)
+                            <option value="{{ $item['poin'] }}">{{ $item['price'] }}</option>
+                            @endforeach
+                        </select>
                       </div>
                       <!-- Total Price -->
                       <div class="mb-4">

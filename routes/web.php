@@ -6,15 +6,24 @@ use App\Models\Price;
 use App\Models\Category;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\LoginController;
 
+Route::get('/order-form', [OrderController::class, 'orderForm'])->name('order.form');
+
+Route::get('/register', [RegisterController::class, 'index']);
+Route::post('/register', [RegisterController::class, 'store']);
+
+Route::get('/login', [LoginController::class, 'index']);
+Route::post('/login', [LoginController::class, 'authenticate']);
 
 Route::get('/', function () {
     return view('home', ['title' => 'Home Page']);
 });
 
 Route::get('/order', function () {
-    $data = ['name' => 'Savero Athallah','title' => 'Order Page'];
-    return view('order', compact('data'));
+    return view('order',  ['name' => 'Savero Athallah','title' => 'Order Page', 'info' => Price::all()]);
 });
 
 Route::get('/welcome', function () {

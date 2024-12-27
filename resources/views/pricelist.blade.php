@@ -7,13 +7,13 @@
       <div class="flex flex-wrap -mx-4">
           @foreach ($prices->groupBy('id_game') as $gameId => $groupedPrices )
           <div class="w-full md:w-1/2 px-4 mb-6">
-              <h3 class="text-xl font-semibold mb-2 text-gray-900"></h3>
+              <h3 class="text-xl font-semibold mb-2 text-gray-900">{{$groupedPrices->first()->category->name}}</h3>
               <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
                   <table class="min-w-full divide-y divide-gray-200">
                       <thead class="bg-gray-800">
                           <tr>
                               <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                                Valorant Point
+                                {{$groupedPrices->first()->category->point}}
                               </th>
                               <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
                                   Price

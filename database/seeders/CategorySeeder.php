@@ -17,7 +17,7 @@ class CategorySeeder extends Seeder
             'name' => 'PUBG Mobile',
             'slug' => 'pubg-mobile',
             'color' => 'brown',
-            'point' => 'uc'
+            'point' => 'UC'
         ]);
 
         Category::create([
@@ -31,7 +31,7 @@ class CategorySeeder extends Seeder
             'name' => 'Valorant',
             'slug' => 'valorant-valo',
             'color' => 'red',
-            'point' => 'vp'
+            'point' => 'Valorant Points'
 
         ]);
 
