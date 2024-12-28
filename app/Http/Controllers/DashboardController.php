@@ -18,23 +18,31 @@ class DashboardController extends Controller
 
     public function posts() {
 
-        return view('dashboard.posts', [
+        return view('dashboard.posts.posts', [
             'title' => 'Manage Blog',
-            'posts' => Post::all(),
+            'posts' => Post::paginate(4),
             'category' => Category::all()
+        ]
+    );
+    }
+
+    public function insert() {
+
+        return view('dashboard.posts.insert', [
+            'title' => 'Insert Blog',
         ]
     );
     }
     public function pricelist() {
 
-        return view('dashboard.pricelist', [
+        return view('dashboard.pricelist.pricelist', [
             'title' => 'Manage Pricelist'
         ]
     );
     }
     public function order() {
 
-        return view('dashboard.order', [
+        return view('dashboard.order.order', [
             'title' => 'Manage Order'
         ]
     );

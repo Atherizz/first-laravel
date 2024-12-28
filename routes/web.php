@@ -22,8 +22,13 @@ Route::post('/login', [LoginController::class, 'authenticate'])->name('login');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
+
 Route::get('/dashboard/posts', [DashboardController::class, 'posts'])->middleware('auth');
+Route::get('/dashboard/posts/insert', [DashboardController::class, 'insert'])->middleware('auth');
+
+
 Route::get('/dashboard/pricelist', [DashboardController::class, 'pricelist'])->middleware('auth');
+
 Route::get('/dashboard/order', [DashboardController::class, 'order'])->middleware('auth');
 
 Route::get('/', function () {
