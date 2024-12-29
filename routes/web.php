@@ -24,7 +24,8 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->midd
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
 
 Route::get('/dashboard/posts', [DashboardController::class, 'posts'])->middleware('auth');
-Route::get('/dashboard/posts/insert', [DashboardController::class, 'insert'])->middleware('auth');
+Route::post('/dashboard/posts', [DashboardController::class, 'store'])->middleware('auth');
+Route::get('/dashboard/posts/create', [DashboardController::class, 'create'])->middleware('auth');
 
 
 Route::get('/dashboard/pricelist', [DashboardController::class, 'pricelist'])->middleware('auth');

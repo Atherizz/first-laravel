@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\User;
 
 class DashboardController extends Controller
 {
@@ -20,19 +21,37 @@ class DashboardController extends Controller
 
         return view('dashboard.posts.posts', [
             'title' => 'Manage Blog',
-            'posts' => Post::paginate(4),
+            'posts' => Post::paginate(5),
             'category' => Category::all()
         ]
     );
     }
 
-    public function insert() {
+    public function create() {
 
-        return view('dashboard.posts.insert', [
+        return view('dashboard.posts.create', [
             'title' => 'Insert Blog',
+            'category' => Category::all(),
+            'author' => User::all()
         ]
     );
     }
+
+    public function store(Request $request) {
+
+        $validate = $request->validate([
+            'title' => 'required',
+            'body' => 'required|min:5|max:255',
+            'slug' => 'required|unique:posts',
+            'category_id' => 'required',
+            'author_id' => 'required'
+        ]);
+
+        Post::create($validate);
+        return redirect('/dashboard/posts')->with('success', 'Add Blog Success!');
+        
+    }
+
     public function pricelist() {
 
         return view('dashboard.pricelist.pricelist', [
