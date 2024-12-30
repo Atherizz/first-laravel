@@ -24,6 +24,9 @@ Route::post('/login', [LoginController::class, 'authenticate'])->name('login');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
+Route::get('/dashboard/profile', [DashboardController::class, 'profile'])->middleware('auth');
+Route::get('/dashboard/profile/{user}/edit', [DashboardController::class, 'edit'])->middleware('auth');
+Route::put('/dashboard/profile/{user}', [DashboardController::class, 'update'])->middleware('auth');
 
 Route::get('/dashboard/posts', [PostController::class, 'index'])->middleware('auth');
 Route::post('/dashboard/posts', [PostController::class, 'store'])->middleware('auth');

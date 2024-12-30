@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class
         ]);
 
-        Post::factory(100)->recycle
+        Post::factory(20)->recycle
             ([ 
             User::all(),
             Category::all()
