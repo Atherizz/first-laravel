@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+
+    public function index() {
+        return view('dashboard.order.index', [
+            'title' => 'Manage Order'
+        ]
+    );
+    }
     public function orderForm(Request $request)
 {
     $game = $request->get('game');
@@ -26,5 +33,7 @@ class OrderController extends Controller
 
     return view('pricelist', compact('info', 'game'));
 }
+
+
 
 }

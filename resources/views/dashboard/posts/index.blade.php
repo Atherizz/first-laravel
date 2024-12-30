@@ -1,13 +1,19 @@
-<x-admin>
-
+<x-admin>   
     @if (session()->has('success'))
-    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-        <strong class="font-bold">{{ session('success') }}</strong>
-        <button type="button" class="absolute top-0 bottom-0 right-0 px-4 py-3" data-dismiss="alert">
-            <svg class="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 5.652a1 1 0 10-1.414-1.414L10 7.172 7.066 5.066a1 1 0 00-1.414 1.414l2.934 2.934-2.934 2.934a1 1 0 101.414 1.414l2.934-2.934 2.934 2.934a1 1 0 001.414-1.414L12.414 10l2.934-2.934z"/></svg>
-        </button>
+    <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
+        <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden mb-5">
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative w-full" role="alert">
+                <strong class="font-bold">{{ session('success') }}</strong>
+                <button type="button" class="absolute top-0 bottom-0 right-0 px-4 py-3" data-dismiss="alert">
+                    <svg class="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <title>Close</title>
+                        <path d="M14.348 5.652a1 1 0 10-1.414-1.414L10 7.172 7.066 5.066a1 1 0 00-1.414 1.414l2.934 2.934-2.934 2.934a1 1 0 101.414 1.414l2.934-2.934 2.934 2.934a1 1 0 001.414-1.414L12.414 10l2.934-2.934z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
     </div>
-@endif
+    @endif
     
     <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
         <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
@@ -83,6 +89,7 @@
                                 <th scope="col" class="px-4 py-3">Author</th>
                                 <th scope="col" class="px-4 py-3">Description</th>
                                 <th scope="col" class="px-4 py-3">Slug</th>
+                                <th scope="col" class="px-4 py-3">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -93,12 +100,14 @@
                                 <td class="px-4 py-3">{{ $item->author->name }}</td>
                                 <td class="px-4 py-3">{{ Str::limit($item->body, 30) }}</td>
                                 <td class="px-4 py-3">{{ $item->slug }}</td>
-                                <td class="px-4 py-3 flex flex-col items-end space-y-1">
-                                    <button data-modal-target="readProductModal" data-modal-toggle="readProductModal" onclick="showModal('{{ $item->title }}', '{{ $item->body }}')" class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100" type="button">
-                                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                                        </svg>
-                                    </button>
+                                <td class="px-4 py-3 flex space-x-2">
+                                    <a href="/dashboard/posts/{{ $item->slug }}" class="text-blue-600 hover:underline">Show</a>
+                                    <a href="/dashboard/posts/{{ $item->slug }}/edit" class="text-yellow-600 hover:underline">Edit</a>
+                                    <form action="/dashboard/posts/{{ $item->slug }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-600 hover:underline">Delete</button>
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach
@@ -106,61 +115,27 @@
                     </table>
                 </div>
                 {{ $posts->links() }}
-
             </div>
         </div>
         </section>
 
-  <!-- Main modal -->
-  <div id="readProductModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
-    <div class="relative p-4 w-full max-w-xl h-full md:h-auto">
-        <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
-            <div class="flex justify-between mb-4 rounded-t sm:mb-5">
-                <div class="text-lg text-gray-900 md:text-xl dark:text-white">
-                    <h3 id="modalTitle" class="font-semibold"></h3>
-                </div>
-                <div>
-                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 inline-flex dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="readProductModal">
-                        <svg aria-hidden="true" class ="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                        <span class="sr-only">Close modal</span>
-                    </button>
-                </div>
-            </div>
-            <dl>
-                <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Details</dt>
-                <dd id="modalDescription" class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400"></dd>
-            </dl>
-            <div class="flex justify-between items-center">
-                <a class="text-white inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                    Edit
-                </a>
-                <form action="" method="POST" onsubmit="return confirm('Are you sure you want to delete this item?');" class="inline">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="inline-flex items-center text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">
-                        Delete
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <script>
-    function showModal(title, description) {
+    function showModal(title, description, id) {
         document.getElementById('modalTitle').innerText = title;
         document.getElementById('modalDescription').innerText = description;
+        const editButton = document.getElementById('editButton');
+        editButton.href = `/dashboard/posts/${id}/edit`; // Mengatur href tombol edit
         const modal = document.getElementById('readProductModal');
         modal.classList.remove('hidden');
     }
 
     document.querySelectorAll('[data-dismiss="alert"]').forEach((button) => {
-button.addEventListener('click', () => {
-    button.parentElement.remove();
-});
-});
-
-    
+        button.addEventListener('click', () => {
+            button.parentElement.remove();
+        });
+    });
 </script>
 
 
