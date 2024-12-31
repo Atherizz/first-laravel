@@ -27,6 +27,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('aut
 Route::get('/dashboard/profile', [DashboardController::class, 'profile'])->middleware('auth');
 Route::get('/dashboard/profile/{user}/edit', [DashboardController::class, 'edit'])->middleware('auth');
 Route::put('/dashboard/profile/{user}', [DashboardController::class, 'update'])->middleware('auth');
+Route::delete('/dashboard/profile/{user}', [DashboardController::class, 'destroy'])->middleware('auth');
 
 Route::get('/dashboard/posts', [PostController::class, 'index'])->middleware('auth');
 Route::post('/dashboard/posts', [PostController::class, 'store'])->middleware('auth');
@@ -35,6 +36,7 @@ Route::get('/dashboard/posts/{post:slug}', [PostController::class, 'show'])->mid
 Route::get('/dashboard/posts/{post:slug}/edit', [PostController::class, 'edit'])->middleware('auth');
 Route::put('/dashboard/posts/{post:slug}', [PostController::class, 'update'])->middleware('auth');
 Route::delete('/dashboard/posts/{post:slug}', [PostController::class, 'destroy'])->middleware('auth');
+Route::delete('/dashboard/posts', [PostController::class, 'truncate'])->middleware('auth');
 
 
 

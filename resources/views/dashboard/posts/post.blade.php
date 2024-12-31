@@ -27,6 +27,16 @@
                     </address>
                     <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">{{ $post['title'] }}</h1>
                 </header>
+                
+                <!-- Gambar Artikel -->
+                 {{-- @isset($post->picture)       
+                <div class="mb-6">
+                    <img src="{{ asset('storage/' . $post['picture'])  }}" alt="{{ $post['title'] }}" class="w-full h-auto rounded-lg">
+                </div>
+                @endisset --}}
+              
+              
+
                 <p class="lead">{{ $post['body']}}</p>
                 <br>
                 <a href="/dashboard/posts" class="inline-flex items-center font-medium text-primary-600 dark:text-primary-500 hover:underline">
@@ -36,4 +46,4 @@
             </article>
         </div>
     </main>
-    </x-admin>
+</x-admin>

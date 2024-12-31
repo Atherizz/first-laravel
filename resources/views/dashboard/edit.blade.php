@@ -25,7 +25,7 @@
                     </div>
                     <div class="col-span-1 md:col-span-2">
                         <label class="block text-gray-700 mb-2" for="profilePicture">Profile Picture</label>
-                        <input class="w-full p-2 border rounded-md" type="file" id="picture" name="picture">
+                        <input class="w-full p-2 border rounded-md" type="file" id="picture" name="picture"">
                     </div>
                 </div>
                 <div class="flex justify-end">

@@ -22,12 +22,20 @@
             <div class="flex items-center space-x-6 mb-4">
                 <img 
                 class="w-24 h-24 rounded-full" 
-                src="{{ auth()->User()->picture ? asset('storage/' . auth()->User()->picture) : 'https://placehold.co/100x100' }}" 
-                alt="User profile picture"
-            >            
+                src="{{ auth()->User ()->picture ? asset('storage/' . auth()->User ()->picture) : asset('img/user.png')  }}" 
+                alt="User  profile picture"
+                >            
                 <div>
-                    <h2 class="text-2xl font-semibold">{{ auth()->User()->name }}</h2>
-                    <p class="text-gray-600">{{ auth()->User()->email }}</p>
+                    <h2 class="text-2xl font-semibold">{{ auth()->User ()->name }}</h2>
+                    <p class="text-gray-600">{{ auth()->User ()->email }}</p>
+                    <form action="/dashboard/profile/{{  auth()->User ()->id }}" method="POST" class="mt-2" onsubmit="return confirm('Are you sure you want to delete this picture?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" name="submit" class="text-sm text-red-500 hover:underline">
+                            Delete Profile Picture
+                        </button>
+                    </form>
+                    @error('error')<div class="alert alert-danger"><p style="color: red; font-style:italic">{{ $message }}</p></div>@enderror
                 </div>
             </div>
             <div class="mb-4">
@@ -35,31 +43,44 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-gray-700">Full Name</label>
-                        <p class="bg-gray-100 p-2 rounded-md">{{ auth()->User()->name }}</p>
+                        <p class="bg-gray-100 p-2 rounded-md">{{ auth()->User ()->name }}</p>
                     </div>
                     <div>
                         <label class="block text-gray-700">Email</label>
-                        <p class="bg-gray-100 p-2 rounded-md">{{ auth()->User()->email }}</p>
+                        <p class="bg-gray-100 p-2 rounded-md">{{ auth()->User ()->email }}</p>
                     </div>
                     <div>
                         <label class="block text-gray-700">Phone</label>
-                        <p class="bg-gray-100 p-2 rounded-md">@empty(auth()->User()->phone)
+                        <p class="bg-gray-100 p-2 rounded-md">@empty(auth()->User ()->phone)
                             -
-                        @endempty{{ auth()->User()->phone }}</p>
+                        @endempty{{ auth()->User ()->phone }}</p>
                     </div>
                     <div>
                         <label class="block text-gray-700">Address</label>
-                        <p class="bg-gray-100 p-2 rounded-md">@empty(auth()->User()->address)
+                        <p class="bg-gray-100 p-2 rounded-md">@empty(auth()->User ()->address)
                             -
-                        @endempty{{ auth()->User()->address }}</p>
+                        @endempty{{ auth()->User ()->address }}</p>
                     </div>
                 </div>
             </div>
+            <a href="/" class="text-sm text-blue-500 hover:underline">
+                Back to Home
+            </a>
             <div class="flex justify-end">
-                <a href="/dashboard/profile/{{ auth()->User()->id }}/edit" class="bg-blue-600 text-white px-4 py-2 rounded-md">
+                <a href="/dashboard/profile/{{ auth()->User ()->id }}/edit" class="bg-blue-600 text-white px-4 py-2 rounded-md">
                  Edit Profile
                 </a>
             </div>
         </div>
     </div>
+
 </x-layout>
+
+<script>
+    document.querySelectorAll('[data-dismiss=" alert"]').forEach((button) => {
+        button.addEventListener('click', () => {
+            button.parentElement.remove();
+        });
+    });
+
+</script>

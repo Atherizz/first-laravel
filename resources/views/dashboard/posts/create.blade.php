@@ -2,7 +2,7 @@
         <section class="bg-white dark:bg-gray-900">
             <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
                 <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Add a new blog</h2>
-                <form action="/dashboard/posts" method="POST">
+                <form action="/dashboard/posts" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
                         <div class="sm:col-span-2">
@@ -30,6 +30,10 @@
                             <label for="slug" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Slug</label>
                             <input type="text" id="slug" name="slug" class="border border-gray-300 rounded-lg py-2 px-4 w-full @error('slug') is-invalid @enderror" value="{{ old('slug') }}"" placeholder="Enter blog slug">
                             @error('slug')<div class="alert alert-danger"><p style="color: red; font-style:italic">{{ $message }}</p></div>@enderror
+                        </div>
+                        <div>
+                        <label class="block text-gray-700 mb-2" for="profilePicture">Profile Picture</label>
+                        <input class="w-full p-2 border rounded-md" type="file" id="picture" name="picture"">
                         </div>
                         <div class="sm:col-span-2">
                             <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>

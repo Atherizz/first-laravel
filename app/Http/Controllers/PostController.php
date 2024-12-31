@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -39,11 +40,19 @@ class PostController extends Controller
 
         $validate = $request->validate([
             'title' => 'required',
-            'body' => 'required|min:5|max:255',
+            'body' => 'required|min:5|max:1000',
             'slug' => 'required|unique:posts',
             'category_id' => 'required',
-            'author_id' => 'required'
+            'author_id' => 'required',
+            'picture' => 'nullable'
         ]);
+
+        if ($request->file('picture')) {
+            if ($request->picture) {
+            Storage::delete($request->picture);
+            $validate['picture'] = $request->file('picture')->store('post-pictures');
+        } 
+        } 
 
         Post::create($validate);
         return redirect('/dashboard/posts')->with('success', 'Add Blog Success!');
@@ -103,7 +112,16 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        if ($post->picture) {
+            Storage::disk('public')->delete($post->picture);
+        } 
         Post::destroy($post->id);
         return redirect('/dashboard/posts')->with('success', 'Blog has been deleted!');
+    }
+
+    public function truncate()
+    {
+        Post::truncate();
+        return redirect('/dashboard/posts')->with('success', 'All Blog has been deleted!');
     }
 }
