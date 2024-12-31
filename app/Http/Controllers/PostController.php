@@ -44,14 +44,11 @@ class PostController extends Controller
             'slug' => 'required|unique:posts',
             'category_id' => 'required',
             'author_id' => 'required',
-            'picture' => 'nullable'
+            'picture' => 'nullable|image|file|max:5120'
         ]);
 
         if ($request->file('picture')) {
-            if ($request->picture) {
-            Storage::delete($request->picture);
             $validate['picture'] = $request->file('picture')->store('post-pictures');
-        } 
         } 
 
         Post::create($validate);
@@ -93,7 +90,8 @@ class PostController extends Controller
             'title' => 'required',
             'body' => 'required|min:5|max:1000',
             'category_id' => 'required',
-            'author_id' => 'required'
+            'author_id' => 'required',
+            'picture' => 'nullable|image|file|max:5120'
         ];
 
         if ($request->slug != $post->slug) {
@@ -102,8 +100,16 @@ class PostController extends Controller
 
        $validate = $request->validate($rules);
 
-       $post->update($validate);
+       if ($request->file('picture')) {
+        if ($post->picture) {
+        Storage::delete($post->picture);
+        $validate['picture'] = $request->file('picture')->store('post-pictures');
+        } else {
+        $validate['picture'] = $request->file('picture')->store('post-pictures');
+        }
+    } 
 
+       $post->update($validate);
         return redirect('/dashboard/posts')->with('success', 'Edit Blog Success!');
     } 
 

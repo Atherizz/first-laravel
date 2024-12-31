@@ -54,9 +54,10 @@ class DashboardController extends Controller
             if ($user->picture) {
             Storage::delete($user->picture);
             $validate['picture'] = $request->file('picture')->store('profile-pictures');
+        } else {
+            $validate['picture'] = $request->file('picture')->store('profile-pictures');
         }
         } 
-
 
        $user->update($validate);
        return redirect('/dashboard/profile')->with('success', 'Edit Profile Success!');

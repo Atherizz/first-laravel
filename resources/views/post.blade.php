@@ -14,12 +14,15 @@
                         </div>
                     </div>
                 </address>
+                
                 <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">{{ $post['title'] }}</h1>
-                              {{-- <!-- Gambar Artikel -->
-                              <div class="mb-6">
-                                <img src="{{ asset('storage/' . $post['picture'])  }}" alt="{{ $post['title'] }}" class="w-full h-auto rounded-lg">
-                            </div>
-             --}}
+                <!-- Gambar Artikel -->
+
+                @if ($post['picture'])              
+                <div class="mb-6">
+                  <img src="{{ asset('storage/' . $post['picture'])  }}" alt="{{ $post['title'] }}" class="w-full h-auto rounded-lg">
+              </div>
+                @endif
             
             </header>
             <p class="lead">{{ $post['body']}}</p>
