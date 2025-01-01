@@ -19,7 +19,8 @@ class UserSeeder extends Seeder
             'email' => 'saveroathallah86@gmail.com',
             'name' => 'Savero Athallah',
             'username' => 'Atherizz',
-            'password' => Hash::make('admin123')
+            'password' => Hash::make('admin123'),
+            'is_admin' => true
         ]);
         User::factory(4)->create();
     }

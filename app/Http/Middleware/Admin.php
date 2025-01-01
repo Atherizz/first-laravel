@@ -16,11 +16,10 @@ class Admin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::guest() || Auth::user()->username !== 'Atherizz') {
+        if(Auth::guest() || !Auth::user()->is_admin) {
             abort(403);
         }
 
-        
         return $next($request);
     }
 }
