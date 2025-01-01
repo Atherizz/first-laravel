@@ -2,34 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
-use App\Models\Category;
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class DashboardController extends Controller
+
+class ProfileController extends Controller
 {
-    public function index() {
-
-        return view('dashboard.index', [
-            'title' => 'Dashboard'
-        ]
-    );
-    }
-
-    public function show(User $user) {
-
-        return view('dashboard.profile', [
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(User $user)
+    {
+        return view('dashboard.profile.index', [
             'title' => 'Profile',
             'user' => $user
         ]
     );
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
+    // public function show(User $user) {
+
+
+    // }
+
     public function edit(User $user) {
 
-        return view('dashboard.edit', [
+        return view('dashboard.profile.edit', [
             'title' => 'Edit Profile',
             'user' => $user
         ]

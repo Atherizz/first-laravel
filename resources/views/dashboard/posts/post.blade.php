@@ -13,10 +13,10 @@
                             </div>
                         </div>
                         <div class="ml-auto flex space-x-2">
-                            <a href="/dashboard/posts/{{ $post->slug }}/edit" class="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700">
+                            <a href="/dashboard/posts/{{ $post->id }}/edit" class="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700">
                                 Edit
                             </a>
-                            <form action="/dashboard/posts/{{ $post->slug}}" method="POST" onsubmit="return confirm('Are you sure you want to delete this post?');">
+                            <form action="/dashboard/posts/{{ $post->id}}" method="POST" onsubmit="return confirm('Are you sure you want to delete this post?');">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-red-600 rounded hover:bg-red-700">

@@ -3,7 +3,7 @@
     <div class="container mx-auto p-6">
         <div class="bg-white shadow-md rounded-lg p-6">
             <h2 class="text-2xl font-semibold mb-4">Edit Profile</h2>
-            <form action="/dashboard/profile/{{ $user->id }}" method="POST" enctype="multipart/form-data">
+            <form action="/dashboard/profile/{{ auth()->User()->id }}" method="POST" enctype="multipart/form-data">
                 @method('put')
                 @csrf
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">

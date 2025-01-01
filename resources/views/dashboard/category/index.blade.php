@@ -1,4 +1,4 @@
-<x-admin>   
+<x-admin>
     @if (session()->has('success'))
     <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
         <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden mb-5">
@@ -54,7 +54,7 @@
                                     </li>
                                 </ul>
                                 <div class="py-1">
-                                    <form action="/dashboard/posts" method="POST" onsubmit="return confirm('Are you sure you want to delete all item?');">
+                                    <form action="/dashboard/category" method="POST" onsubmit="return confirm('Are you sure you want to delete all item?');">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete all</button>
@@ -88,26 +88,18 @@
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
-                                <th scope="col" class="px-4 py-3">Title</th>
                                 <th scope="col" class="px-4 py-3">Category</th>
-                                <th scope="col" class="px-4 py-3">Author</th>
-                                <th scope="col" class="px-4 py-3">Description</th>
-                                <th scope="col" class="px-4 py-3">Slug</th>
                                 <th scope="col" class="px-4 py-3">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($posts as $item)
+                            @foreach ($category as $item)
                             <tr class="border-b dark:border-gray-700">
-                                <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $item->title }}</th>
-                                <td class="px-4 py-3">{{ $item->category->name }}</td>
-                                <td class="px-4 py-3">{{ $item->author->name }}</td>
-                                <td class="px-4 py-3">{{ Str::limit($item->body, 30) }}</td>
-                                <td class="px-4 py-3">{{ $item->slug }}</td>
+                                <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $item->name}}</th>
                                 <td class="px-4 py-3 flex space-x-2">
-                                    <a href="/dashboard/posts/{{ $item->id }}" class="text-blue-600 hover:underline">Show</a>
-                                    <a href="/dashboard/posts/{{ $item->id }}/edit" class="text-yellow-600 hover:underline">Edit</a>
-                                    <form action="/dashboard/posts/{{ $item->id }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                    <a href="/dashboard/category/{{ $item->id }}" class="text-blue-600 hover:underline">Show</a>
+                                    <a href="/dashboard/category/{{ $item->id }}/edit" class="text-yellow-600 hover:underline">Edit</a>
+                                    <form action="/dashboard/category/{{ $item->id }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this item?');">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="text-red-600 hover:underline">Delete</button>
@@ -118,7 +110,6 @@
                         </tbody>
                     </table>
                 </div>
-                {{ $posts->links() }}
             </div>
         </div>
         </section>
@@ -126,15 +117,6 @@
 
 
 <script>
-    function showModal(title, description, id) {
-        document.getElementById('modalTitle').innerText = title;
-        document.getElementById('modalDescription').innerText = description;
-        const editButton = document.getElementById('editButton');
-        editButton.href = `/dashboard/posts/${id}/edit`; // Mengatur href tombol edit
-        const modal = document.getElementById('readProductModal');
-        modal.classList.remove('hidden');
-    }
-
     document.querySelectorAll('[data-dismiss="alert"]').forEach((button) => {
         button.addEventListener('click', () => {
             button.parentElement.remove();
@@ -142,8 +124,4 @@
     });
 </script>
 
-
-
-
- 
 </x-admin>

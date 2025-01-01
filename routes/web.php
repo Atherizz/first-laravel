@@ -7,8 +7,10 @@ use App\Models\Category;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PricelistController;
@@ -24,19 +26,17 @@ Route::post('/login', [LoginController::class, 'authenticate'])->name('login');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
-Route::get('/dashboard/profile', [DashboardController::class, 'profile'])->middleware('auth');
-Route::get('/dashboard/profile/{user}/edit', [DashboardController::class, 'edit'])->middleware('auth');
-Route::put('/dashboard/profile/{user}', [DashboardController::class, 'update'])->middleware('auth');
-Route::delete('/dashboard/profile/{user}', [DashboardController::class, 'destroy'])->middleware('auth');
 
-Route::get('/dashboard/posts', [PostController::class, 'index'])->middleware('auth');
-Route::post('/dashboard/posts', [PostController::class, 'store'])->middleware('auth');
-Route::get('/dashboard/posts/create', [PostController::class, 'create'])->middleware('auth');
-Route::get('/dashboard/posts/{post:slug}', [PostController::class, 'show'])->middleware('auth');
-Route::get('/dashboard/posts/{post:slug}/edit', [PostController::class, 'edit'])->middleware('auth');
-Route::put('/dashboard/posts/{post:slug}', [PostController::class, 'update'])->middleware('auth');
-Route::delete('/dashboard/posts/{post:slug}', [PostController::class, 'destroy'])->middleware('auth');
+// Route::resource('/dashboard/profile', ProfileController::class)->middleware('auth');
+Route::get('/dashboard/profile', [ProfileController::class, 'index'])->middleware('auth');
+Route::get('/dashboard/profile/{user}/edit', [ProfileController::class, 'edit'])->middleware('auth');
+Route::put('/dashboard/profile/{user}', [ProfileController::class, 'update'])->middleware('auth');
+Route::delete('/dashboard/profile/{user}', [ProfileController::class, 'destroy'])->middleware('auth');
+
+Route::resource('/dashboard/posts', PostController::class)->middleware('auth');
 Route::delete('/dashboard/posts', [PostController::class, 'truncate'])->middleware('auth');
+
+Route::resource('/dashboard/category', AdminController::class)->middleware('admin');
 
 
 
