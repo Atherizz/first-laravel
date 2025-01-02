@@ -12,6 +12,8 @@
                                 <p class="text-base text-gray-500 dark:text-gray-400"><title="February 8th, 2022">{{ $post['created_at']->diffForHumans() }}</title></p>
                             </div>
                         </div>
+                        @can('update-post', $post)
+                        
                         <div class="ml-auto flex space-x-2">
                             <a href="/dashboard/posts/{{ $post->id }}/edit" class="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700">
                                 Edit
@@ -24,6 +26,7 @@
                                 </button>
                             </form>
                         </div>
+                        @endcan
                     </address>
                     <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">{{ $post['title'] }}</h1>
                     @if ($post['picture'])              

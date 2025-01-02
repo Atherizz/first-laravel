@@ -42,9 +42,9 @@ Route::resource('/dashboard/category', AdminController::class)->middleware('admi
 
 
 
-Route::get('/dashboard/pricelist', [PricelistController::class, 'index'])->middleware('auth');
+Route::get('/dashboard/pricelist', [PricelistController::class, 'index'])->middleware('admin');
 
-Route::get('/dashboard/order', [OrderController::class, 'index'])->middleware('auth');
+Route::get('/dashboard/order', [OrderController::class, 'index'])->middleware('admin');
 
 Route::get('/', function () {
     return view('home', ['title' => 'Home Page']);
@@ -70,7 +70,7 @@ Route::get('/welcome', function () {
 });
 
 Route::get('/posts', function () {
-    return view('posts', ['title' => 'Check Our Blog', 'posts' => Post::filter(request(['search', 'category', 'author']))->latest()->paginate(14)->withQueryString()]);
+    return view('posts', ['title' => 'Check Our Blog', 'posts' => Post::filter(request(['search', 'category', 'author']))->latest()->paginate(4)->withQueryString()]);
 });
 
 Route::get('/posts/{post:slug}', function(Post $post) {

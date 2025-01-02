@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Price;
 use Illuminate\Http\Request;
 
 class PricelistController extends Controller
@@ -12,7 +13,8 @@ class PricelistController extends Controller
     public function index()
     {
         return view('dashboard.pricelist.index', [
-            'title' => 'Manage Pricelist'
+            'title' => 'Manage Pricelist',
+            'prices' => Price::all()
         ]
     );
     }

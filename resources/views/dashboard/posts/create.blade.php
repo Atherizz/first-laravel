@@ -19,12 +19,14 @@
                             </select>
                         </div>
                         <div class="w-full">
-                            <label for="author" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Author</label>
-                            <select id="author" name="author_id" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                @foreach ($author as $item)
+                            <label for="author_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Author</label>
+                            <input class="w-full p-2 border rounded-md  id="author" value="{{ auth()->User()->name }}" name="author" disabled>
+                            <input class="w-full p-2 border rounded-md  id="author_id" value="{{ auth()->User()->id }}" type="hidden" name="author_id">
+                            {{-- <select id="author" name="author_id" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                {{-- @foreach ($author as $item)
                                 <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
-                                @endforeach
-                            </select>
+                                @endforeach --}}
+                            {{-- </select> --}}
                         </div>
                         <div>
                             <label for="slug" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Slug</label>
@@ -33,7 +35,8 @@
                         </div>
                         <div>
                         <label class="block text-gray-700 mb-2" for="profilePicture">Profile Picture</label>
-                        <input class="w-full p-2 border rounded-md" type="file" id="picture" name="picture"">
+                        <input class="w-full p-2 border rounded-md @error('picture') is-invalid @enderror" value="{{ old('picture') }}" type="file" id="picture" name="picture"">
+                        @error('picture')<div class="alert alert-danger"><p style="color: red; font-style:italic">{{ $message }}</p></div>@enderror
                         </div>
                         <div class="sm:col-span-2">
                             <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>

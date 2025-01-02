@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
@@ -72,6 +73,10 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        if (Gate::none(['update-post'], $post)) {
+            abort(403, 'you are not allowed to edit this blog!');
+        }
+
         return view('dashboard.posts.edit', [
             'title' => 'Edit Blog',
             'post' => $post,
@@ -118,6 +123,10 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        if (Gate::none(['update-post'], $post)) {
+            abort(403, 'you are not allowed to delete this blog!');
+        }
+
         if ($post->picture) {
             Storage::disk('public')->delete($post->picture);
         } 

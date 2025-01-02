@@ -24,8 +24,6 @@ return new class extends Migration
             $table->string('picture')->nullable();
             $table->longText('body');
             $table->timestamps();
-
-
         });
     }
 

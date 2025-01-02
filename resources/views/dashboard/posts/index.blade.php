@@ -104,14 +104,16 @@
                                 <td class="px-4 py-3">{{ $item->author->name }}</td>
                                 <td class="px-4 py-3">{{ Str::limit($item->body, 30) }}</td>
                                 <td class="px-4 py-3">{{ $item->slug }}</td>
-                                <td class="px-4 py-3 flex space-x-2">
-                                    <a href="/dashboard/posts/{{ $item->id }}" class="text-blue-600 hover:underline">Show</a>
-                                    <a href="/dashboard/posts/{{ $item->id }}/edit" class="text-yellow-600 hover:underline">Edit</a>
+                                <td class="px-4 py-3">
+                                    <a href="/dashboard/posts/{{ $item->id }}" class="text-blue-600 hover:underline block">Show</a>
+                                    @can('update-post', $item)
+                                    <a href="/dashboard/posts/{{ $item->id }}/edit" class="text-yellow-600 hover:underline block">Edit</a>
                                     <form action="/dashboard/posts/{{ $item->id }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this item?');">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:underline">Delete</button>
+                                        <button type="submit" class="text-red-600 hover:underline block">Delete</button>
                                     </form>
+                                    @endcan
                                 </td>
                             </tr>
                             @endforeach
