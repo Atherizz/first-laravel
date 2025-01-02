@@ -17,21 +17,24 @@ class CategorySeeder extends Seeder
             'name' => 'PUBG Mobile',
             'slug' => 'pubg-mobile',
             'color' => 'brown',
-            'point' => 'UC'
+            'point' => 'UC',
+            'img' => 'pubgm.jpg'
         ]);
 
         Category::create([
             'name' => 'Mobile Legends',
             'slug' => 'mobile-legends',
             'color' => 'blue',
-            'point' => 'diamonds'
+            'point' => 'diamonds',
+            'img' => 'ml.png'
         ]);
 
         Category::create([
             'name' => 'Valorant',
             'slug' => 'valorant-valo',
             'color' => 'red',
-            'point' => 'Valorant Points'
+            'point' => 'Valorant Points',
+            'img' => 'valo.png'
 
         ]);
 
@@ -39,7 +42,8 @@ class CategorySeeder extends Seeder
             'name' => 'Marvel Rivals',
             'slug' => 'marvel-rivals',
             'color' => 'yellow',
-            'point' => 'lattices'
+            'point' => 'lattices',
+            'img' => 'marvel.jpg'
         ]);
     }
 }

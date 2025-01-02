@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Price;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -10,29 +10,27 @@ class OrderController extends Controller
 
     public function index() {
         return view('dashboard.order.index', [
-            'title' => 'Manage Order'
+            'title' => 'Manage Order',
+            'order' => Order::all()
         ]
     );
     }
-    public function orderForm(Request $request)
-{
-    $game = $request->get('game');
-    $info = [];
-    $price = Price::all()->groupBy('id_game');
 
-    // Data nominal poin berdasarkan game
-    if ($game == 'valorant') {
-        $info = $price[2];
-    } elseif ($game == 'mobile-legend') {
-        $info = $price[1];
-    } elseif ($game == 'pubg-mobile') {
-        $info = $price[0];
-    } elseif ($game == 'marvel-rivals') {
-        $info = $price[3];
+    public function store(Request $request) {
+        // dd($request->all());
+
+        $validate = $request->validate([
+            'game' => 'required',
+            'value' => 'required',
+            'price' => 'required',
+            'payment' => 'required',
+            'username' => 'required',
+            'email' => 'required'
+        ]);
+
+        Order::create($validate);
+        return redirect('/game')->with('success', 'Order Success, we will process early!');
     }
-
-    return view('pricelist', compact('info', 'game'));
-}
 
 
 

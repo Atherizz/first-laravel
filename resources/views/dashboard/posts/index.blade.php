@@ -126,15 +126,6 @@
 
 
 <script>
-    function showModal(title, description, id) {
-        document.getElementById('modalTitle').innerText = title;
-        document.getElementById('modalDescription').innerText = description;
-        const editButton = document.getElementById('editButton');
-        editButton.href = `/dashboard/posts/${id}/edit`; // Mengatur href tombol edit
-        const modal = document.getElementById('readProductModal');
-        modal.classList.remove('hidden');
-    }
-
     document.querySelectorAll('[data-dismiss="alert"]').forEach((button) => {
         button.addEventListener('click', () => {
             button.parentElement.remove();

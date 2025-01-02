@@ -6,6 +6,7 @@ use App\Models\Price;
 use App\Models\Category;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GameController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
@@ -49,9 +50,20 @@ Route::get('/', function () {
     return view('home', ['title' => 'Home Page']);
 });
 
-Route::get('/order', function () {
-    return view('order',  ['name' => 'Savero Athallah','title' => 'Order Page', 'info' => Price::all()]);
+Route::get('/game', function () {
+    return view('game',  [
+    'title' => 'Game List', 'category' => Category::all(), 'price' => Price::all()]);
 });
+
+
+Route::get('/game/order/{category:slug}', function (Category $category) {
+    return view('order',  [
+    'title' => $category->name,
+    'price' => $category->prices,
+    'name' => 'Savero Athallah',
+    'point' => $category->point]);
+});
+Route::post('/game/order', [OrderController::class, 'store']);
 
 Route::get('/welcome', function () {
     return view('welcome');

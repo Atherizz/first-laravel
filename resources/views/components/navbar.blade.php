@@ -11,7 +11,7 @@
               <x-navlink href="/" :active="request()->is('/')">Home</x-navlink>
               <x-navlink href="/posts" :active="request()->is('posts')">Blog</x-navlink>
               <x-navlink href="/pricelist" :active="request()->is('pricelist')">Pricelist</x-navlink>
-              <x-navlink href="/order" :active="request()->is('order')">Order</x-navlink>
+              <x-navlink href="/game" :active="request()->is('game')">Order</x-navlink>
               <x-navlink href="/contact" :active="request()->is('contact')">Contact</x-navlink>
             </div>
           </div>
@@ -108,7 +108,7 @@
           <x-navlink href="/" :active="request()->is('/')">Home</x-navlink>
           <x-navlink href="/posts" :active="request()->is('posts')">Blog</x-navlink>
           <x-navlink href="/pricelist" :active="request()->is('pricelist=')">Pricelist</x-navlink>
-          <x-navlink href="/order" :active="request()->is('order')">Order</x-navlink>
+          <x-navlink href="/game" :active="request()->is('game')">Order</x-navlink>
           <x-navlink href="/contact" :active="request()->is('contact')">Contact</x-navlink>
       </div>
       <div class="border-t border-gray-700 pb-3 pt-4">

@@ -15,6 +15,6 @@ class Category extends Model
     }
 
     public function prices(): HasMany {
-        return $this->hasMany(Post::class, 'id_game');
+        return $this->hasMany(Price::class, 'id_game');
     }
 }
