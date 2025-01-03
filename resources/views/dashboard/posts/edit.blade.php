@@ -24,8 +24,14 @@
                         </select>
                     </div>
                     <div class="w-full">
-                        <label for="author_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Author</label>
-                        <input class="w-full p-2 border rounded-md  id="author" value="{{ $post->author->name }}" name="author" disabled>
+                        <label for="rating" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rating</label>
+                        <select id="rating" name="rating" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            @php for($i = 1; $i <= 5; $i++) :  @endphp
+                        <option value="{{ $i }}"
+                        @if ($post->rating == $i) selected 
+                        @endif>
+                        {{ $i }} / 5</option>
+                    @php endfor @endphp
                         <input class="w-full p-2 border rounded-md  id="author_id" value="{{ $post->author->id  }}" type="hidden" name="author_id">
                     </div>
                     <div>

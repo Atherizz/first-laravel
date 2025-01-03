@@ -22,6 +22,7 @@ return new class extends Migration
             );
             $table->string('slug')->unique();
             $table->string('picture')->nullable();
+            $table->integer('rating');
             $table->longText('body');
             $table->timestamps();
         });

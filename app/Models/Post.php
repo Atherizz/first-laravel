@@ -6,14 +6,23 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class Post extends Model {
+    use HasFactory, Sluggable;
 
-    use HasFactory;
     protected $table = 'posts';
-    protected $fillable = ['title', 'author_id', 'category_id', 'slug', 'body', 'picture'];
+    protected $fillable = ['title', 'author_id', 'category_id', 'slug', 'body', 'picture', 'rating'];
 
     protected $with = ['author', 'category'];
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
+    }
     public function author(): BelongsTo {
         return $this->belongsTo(User::class);
     }

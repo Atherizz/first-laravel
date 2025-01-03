@@ -6,7 +6,7 @@
             <header class="mb-4 lg:mb-6 not-format">
                 <address class="flex items-center mb-6 not-italic">
                     <div class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
-                        <img class="mr-4 w-16 h-16 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Jese Leos">
+                        <img class="mr-4 w-16 h-16 rounded-full" src="{{ $post->author->picture ? asset('storage/' . $post->author->picture) : asset('img/user.png')  }}">
                         <div>
                             <a href="posts?author={{ $post->author->username }}" rel="author" class="text-xl font-bold text-gray-900 dark:text-white">{{ $post->author->name }}</a>
                             <p class="text-base text-gray-500 dark:text-gray-400"><a href="/posts?category/{{ $post->category->slug }}">{{ $post->category->name }}</a></p>
@@ -14,7 +14,18 @@
                         </div>
                     </div>
                 </address>
-                
+                        <!-- Tampilan Rating -->
+        <div class="flex items-center mb-4">
+            @php
+                $rating = $post->rating; // Misalkan rating diambil dari database
+            @endphp
+            @for ($i = 1; $i <= 5; $i++)
+                <svg class="w-5 h-5 {{ $i <= $rating ? 'text-yellow-500' : 'text-gray-300' }}" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 15l-5.878 3.09 1.121-6.535L0 6.545l6.545-.955L10 0l2.455 5.59L20 6.545l-5.243 4.005 1.121 6.535z"></path>
+                </svg>
+            @endfor
+            <span class="ml-2 text-sm text-gray-500">({{ $rating }}/5)</span>
+        </div>
                 <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">{{ $post['title'] }}</h1>
                 <!-- Gambar Artikel -->
 

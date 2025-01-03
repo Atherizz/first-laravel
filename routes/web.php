@@ -5,6 +5,7 @@ use App\Models\User;
 use App\Models\Price;
 use App\Models\Category;
 use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\PostController;
@@ -16,6 +17,8 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PricelistController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+
+Route::get('/dashboard/posts/createSlug', [PostController::class, 'createSlug']);
 
 Route::get('/order-form', [OrderController::class, 'orderForm'])->name('order.form');
 
@@ -36,6 +39,7 @@ Route::delete('/dashboard/profile/{user}', [ProfileController::class, 'destroy']
 
 Route::resource('/dashboard/posts', PostController::class)->middleware('auth');
 Route::delete('/dashboard/posts', [PostController::class, 'truncate'])->middleware('auth');
+
 
 Route::resource('/dashboard/category', AdminController::class)->middleware('admin');
 
@@ -70,7 +74,7 @@ Route::get('/welcome', function () {
 });
 
 Route::get('/posts', function () {
-    return view('posts', ['title' => 'Check Our Blog', 'posts' => Post::filter(request(['search', 'category', 'author']))->latest()->paginate(4)->withQueryString()]);
+    return view('posts', ['title' => 'Check Our Purchase Review', 'posts' => Post::filter(request(['search', 'category', 'author']))->latest()->paginate(4)->withQueryString()]);
 });
 
 Route::get('/posts/{post:slug}', function(Post $post) {

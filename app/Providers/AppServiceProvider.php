@@ -31,6 +31,10 @@ class AppServiceProvider extends ServiceProvider
             return $user->id === $post->author_id || $user->is_admin;
         });
 
+        Gate::define('create-post', function (User $user) {
+            return $user;
+        });
+
 
 
     }

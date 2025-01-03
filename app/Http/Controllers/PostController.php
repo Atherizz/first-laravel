@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
+use Cviebrock\EloquentSluggable\Services\SlugService;
+
 
 class PostController extends Controller
 {
@@ -15,10 +17,15 @@ class PostController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
+        $posts = Post::latest();
+
+        if (request('search')) {
+        $posts->where('title', 'like', '%' . request('search') . '%');
+        }
 
         return view('dashboard.posts.index', [
             'title' => 'Manage Blog',
-            'posts' => Post::paginate(5),
+            'posts' => $posts->paginate(5),
             'category' => Category::all()
         ]
     );
@@ -45,6 +52,7 @@ class PostController extends Controller
             'slug' => 'required|unique:posts',
             'category_id' => 'required',
             'author_id' => 'required',
+            'rating' => 'required',
             'picture' => 'nullable|image|file|max:5120'
         ]);
 
@@ -96,6 +104,7 @@ class PostController extends Controller
             'body' => 'required|min:5|max:1000',
             'category_id' => 'required',
             'author_id' => 'required',
+            'rating' => 'required',
             'picture' => 'nullable|image|file|max:5120'
         ];
 
@@ -138,5 +147,10 @@ class PostController extends Controller
     {
         Post::truncate();
         return redirect('/dashboard/posts')->with('success', 'All Blog has been deleted!');
+    }
+
+    public function createSlug(Request $request) {
+        $slug = SlugService::createSlug(Post::class, 'slug', $request->title);
+        return response()->json(['slug' => $slug]);
     }
 }

@@ -2,7 +2,7 @@
     <x-slot:title>{{ $title }}</x-slot:title>
     <!-- Main Content -->
     <div class="container mx-auto p-6">
-        <h1 class="text-3xl font-bold mb-6">Contact Us</h1>
+        <br>
         <div class="bg-white p-6 rounded-lg shadow-md">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
                 <!-- Instagram -->
@@ -23,4 +23,6 @@
             </div>
         </div>
     </div>
+    <br> <br> <br> <br>
+    
 </x-layout>
