@@ -9,9 +9,9 @@
             <div class="ml-10 flex items-baseline space-x-4">
               <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
               <x-navlink href="/" :active="request()->is('/')">Home</x-navlink>
-              <x-navlink href="/posts" :active="request()->is('posts')">Review</x-navlink>
               <x-navlink href="/pricelist" :active="request()->is('pricelist')">Pricelist</x-navlink>
               <x-navlink href="/game" :active="request()->is('game')">Order</x-navlink>
+              <x-navlink href="/posts" :active="request()->is('posts')">Review</x-navlink>
               <x-navlink href="/contact" :active="request()->is('contact')">Contact</x-navlink>
             </div>
           </div>
@@ -106,24 +106,33 @@
     <div x-show="isOpen" class="md:hidden" id="mobile-menu">
       <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
           <x-navlink href="/" :active="request()->is('/')">Home</x-navlink>
-          <x-navlink href="/posts" :active="request()->is('posts')">Review</x-navlink>
           <x-navlink href="/pricelist" :active="request()->is('pricelist=')">Pricelist</x-navlink>
           <x-navlink href="/game" :active="request()->is('game')">Order</x-navlink>
+          <x-navlink href="/posts" :active="request()->is('posts')">Review</x-navlink>
           <x-navlink href="/contact" :active="request()->is('contact')">Contact</x-navlink>
       </div>
+      @auth
+        
+
       <div class="border-t border-gray-700 pb-3 pt-4">
           <div class="flex items-center px-5">
-              <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+              <img class="h-10 w-10 rounded-full" src="{{ auth()->User()->picture ? asset('storage/' . auth()->User()->picture) : asset('img/user.png')  }}" alt="">
               <div class="ml-3">
-                  <div class="text-base font-medium text-white">Tom Cook</div>
-                  <div class="text-sm font-medium text-gray-400">tom@example.com</div>
+                  <div class="text-base font-medium text-white">{{ auth()->User()->name }}</div>
+                  <div class="text-sm font-medium text-gray-400">{{ auth()->User()->email }}</div>
               </div>
           </div>
           <div class="mt-3 space-y-1 px-2">
-              <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Your Profile</a>
-              <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Settings</a>
-              <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Sign out</a>
+              <a href="/dashboard/profile" class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Your Profile</a>
+              <form action="/logout" method="POST">
+                @csrf
+                <button type="submit" class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Sign out</button>
+            </form>
+          </div>
           </div>
       </div>
   </div>
+  @else
+  <x-navlink href="/login" :active="request()->is('login')">Login</x-navlink>
+  @endauth
 </nav>
