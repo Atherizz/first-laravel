@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Price;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class PricelistController extends Controller
@@ -14,49 +15,49 @@ class PricelistController extends Controller
     {
         return view('dashboard.pricelist.index', [
             'title' => 'Manage Pricelist',
-            'prices' => Price::all()
+            'prices' => Price::all(),
+            'category' => Category::all()
         ]
     );
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'id_game' => 'required',
+            'value' => 'required|numeric',
+            'price' => 'required|numeric'
+        ]);
+
+        Price::create($validate);
+        return redirect('/dashboard/pricelist')->with('success', 'Add Pricelist Success!');
+
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit(Price $price)
     {
-        //
+        return view('dashboard.pricelist.edit', [
+            'title' => 'Edit Blog',
+            'price' => $price,
+            'category' => Category::all(),
+        ]
+    );
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(Request $request, Price $price)
     {
-        //
-    }
+        $validate = $request->validate([
+            'id_game' => 'required',
+            'value' => 'required|numeric',
+            'price' => 'required|numeric'
+        ]);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+        $price->update($validate);
+        return redirect('/dashboard/pricelist')->with('success', 'Edit Pricelist Success!');
     }
 
     /**

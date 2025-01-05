@@ -9,16 +9,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\SiteController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PricelistController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 Route::get('/dashboard/posts/createSlug', [PostController::class, 'createSlug']);
+
 
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
@@ -55,12 +58,8 @@ Route::resource('/dashboard/posts', PostController::class)->middleware('auth');
 Route::delete('/dashboard/posts', [PostController::class, 'truncate'])->middleware('auth');
 
 
-Route::resource('/dashboard/category', AdminController::class)->middleware('admin');
-
-
-
-
-Route::get('/dashboard/pricelist', [PricelistController::class, 'index'])->middleware('admin');
+Route::resource('/dashboard/category', CategoryController::class)->middleware('admin')->except(['edit', 'update', 'show']);
+Route::resource('/dashboard/pricelist', PricelistController::class)->middleware('admin');
 
 Route::get('/dashboard/order', [OrderController::class, 'index'])->middleware('admin');
 

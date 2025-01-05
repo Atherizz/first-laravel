@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Price extends Model {
     use HasFactory;
+    protected $fillable = ['id_game', 'value', 'price'];
 
     public function category(): BelongsTo {
         return $this->belongsTo(Category::class, 'id_game');
