@@ -48,7 +48,7 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $item['value'] }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $item['price'] }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        {{-- <a href="/dashboard/pricelist/{{ $item->id }}/edit" class="text-yellow-600 hover:underline">Edit</a> --}}
+                                        <a href="/dashboard/pricelist/{{ $item->id }}/edit" class="text-yellow-600 hover:underline">Edit</a>
                                         <form action="/dashboard/pricelist/{{ $item->id }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this item?');">
                                             @csrf
                                             @method('DELETE')

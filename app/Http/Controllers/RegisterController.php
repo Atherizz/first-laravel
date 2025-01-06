@@ -7,7 +7,6 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
-use Ramsey\Uuid\Type\Time;
 use Carbon\Carbon;
 
 class RegisterController extends Controller

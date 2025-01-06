@@ -41,9 +41,6 @@ class PostController extends Controller
     );
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request) {
 
         $validate = $request->validate([
@@ -64,10 +61,6 @@ class PostController extends Controller
         return redirect('/dashboard/posts')->with('success', 'Add Blog Success!');
         
     }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(Post $post)
     {
         return view('dashboard.posts.post', [
@@ -75,10 +68,6 @@ class PostController extends Controller
         ]
     );
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Post $post)
     {
         if (Gate::none(['update-post'], $post)) {
@@ -93,10 +82,6 @@ class PostController extends Controller
         ]
     );
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Post $post)
     {
         $rules = [
