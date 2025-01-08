@@ -23,20 +23,6 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 Route::get('/dashboard/posts/createSlug', [PostController::class, 'createSlug']);
 
 
-Route::get('/email/verify', function () {
-    return view('auth.verify-email');
-})->middleware('auth')->name('verification.notice');    
-
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill();
-    return redirect('/home');
-})->middleware(['auth', 'signed'])->name('verification.verify');
- 
-Route::post('/email/verification-notification', function (Request $request) {
-    $request->user()->sendEmailVerificationNotification();
-    return back()->with('message', 'Verification link sent!');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
-
 Route::get('/order-form', [OrderController::class, 'orderForm'])->name('order.form');
 
 Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
@@ -46,22 +32,39 @@ Route::get('/login', [LoginController::class, 'index'])->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
+Route::middleware('auth')->group(function () {
+    Route::get('/email/verify', function () {
+        return view('auth.verify-email');
+    })->middleware('auth')->name('verification.notice');    
+    
+    Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+        $request->fulfill();
+        return redirect('/dashboard');
+    })->middleware(['auth', 'signed'])->name('verification.verify');
+     
+    Route::post('/email/verification-notification', function (Request $request) {
+        $request->user()->sendEmailVerificationNotification();
+        return back()->with('message', 'Verification link sent!');
+    })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+});
 
-// Route::resource('/dashboard/profile', ProfileController::class)->middleware('auth');
-Route::get('/dashboard/profile', [ProfileController::class, 'index'])->middleware('auth');
-Route::get('/dashboard/profile/{user}/edit', [ProfileController::class, 'edit'])->middleware('auth');
-Route::put('/dashboard/profile/{user}', [ProfileController::class, 'update'])->middleware('auth');
-Route::delete('/dashboard/profile/{user}', [ProfileController::class, 'destroy'])->middleware('auth');
 
-Route::resource('/dashboard/posts', PostController::class)->middleware('auth');
-Route::delete('/dashboard/posts', [PostController::class, 'truncate'])->middleware('auth');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('/dashboard/profile', [ProfileController::class, 'index']);
+    Route::get('/dashboard/profile/{user}/edit', [ProfileController::class, 'edit']);
+    Route::put('/dashboard/profile/{user}', [ProfileController::class, 'update']);
+    Route::delete('/dashboard/profile/{user}', [ProfileController::class, 'destroy']);
+    Route::resource('/dashboard/posts', PostController::class);
+    Route::delete('/dashboard/posts', [PostController::class, 'truncate']);
+});
 
 
-Route::resource('/dashboard/category', CategoryController::class)->middleware('admin')->except(['edit', 'update', 'show']);
-Route::resource('/dashboard/pricelist', PricelistController::class)->middleware('admin');
 
-Route::get('/dashboard/order', [OrderController::class, 'index'])->middleware('admin');
+Route::resource('/dashboard/category', CategoryController::class)->middleware('admin', 'verified')->except(['edit', 'update', 'show']);
+Route::resource('/dashboard/pricelist', PricelistController::class)->middleware('admin', 'verified');
+
+Route::get('/dashboard/order', [OrderController::class, 'index'])->middleware('admin', 'verified');
 
 Route::get('/', function () {
     return view('home', ['title' => 'Home Page']);
