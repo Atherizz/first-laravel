@@ -38,17 +38,19 @@ class PricelistController extends Controller
 
     }
 
-    public function edit(Price $price)
+    public function edit(int $id)
     {
-        return view('dashboard.pricelist.edit', [
-            'title' => 'Edit Blog',
-            'price' => $price,
-            'category' => Category::all(),
-        ]
-    );
+
+   $price = Price::findOrFail($id); 
+
+   return view('dashboard.pricelist.edit', [
+       'title' => 'Edit Price',
+       'price' => $price, 
+       'category' => Category::all(),
+   ]);
     }
 
-    public function update(Request $request, Price $price)
+    public function update(Request $request, int $id)
     {
         $validate = $request->validate([
             'id_game' => 'required',
@@ -56,15 +58,18 @@ class PricelistController extends Controller
             'price' => 'required|numeric'
         ]);
 
+        $price = Price::find($id);
         $price->update($validate);
+
         return redirect('/dashboard/pricelist')->with('success', 'Edit Pricelist Success!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Price $price)
     {
-        //
+        Price::destroy($price->id);
+        return redirect('/dashboard/pricelist')->with('success', 'Pricelist has been deleted!');
     }
 }
