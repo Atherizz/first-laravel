@@ -18,6 +18,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PricelistController;
+use App\Models\Order;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 Route::get('/dashboard/posts/createSlug', [PostController::class, 'createSlug']);
@@ -61,10 +62,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
 
-Route::resource('/dashboard/category', CategoryController::class)->middleware('admin', 'verified')->except(['edit', 'update', 'show']);
-Route::resource('/dashboard/pricelist', PricelistController::class)->middleware('admin', 'verified');
+Route::resource('/dashboard/category', CategoryController::class)->middleware(['admin', 'verified'])->except(['edit', 'update', 'show']);
+Route::resource('/dashboard/pricelist', PricelistController::class)->middleware(['admin', 'verified']);
 
-Route::get('/dashboard/order', [OrderController::class, 'index'])->middleware('admin', 'verified');
+Route::get('/dashboard/order', [OrderController::class, 'index'])->middleware(['admin', 'verified']);
 
 Route::get('/', function () {
     return view('home', ['title' => 'Home Page']);
@@ -88,6 +89,15 @@ Route::post('/game/order', [OrderController::class, 'store']);
 Route::get('/welcome', function () {
     return view('welcome');
 });
+
+Route::get('/cart', function () {
+    $carts = Order::latest();
+    $cart = $carts->where('id',auth()->User()->id);
+    return view('cart',[
+        'title' => 'Order Cart',
+        'cart' => $cart
+        ]);
+})->middleware('auth');
 
 Route::get('/posts', function () {
     return view('posts', ['title' => 'Check Our Purchase Review', 'posts' => Post::filter(request(['search', 'category', 'author']))->latest()->paginate(4)->withQueryString()]);

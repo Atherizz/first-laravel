@@ -8,6 +8,8 @@
                   <form method="POST" action="/game/order">
                     @csrf
                     <input type="hidden" id="game-input" name="game" value="{{ $title }}">
+                    <input type="hidden" id="status" name="status" value="unpaid">
+                    <input type="hidden" id="user_id" name="user_id" value="{{ auth()->User()->id }}">
                       <!-- Topup Amount -->
                       <div class="mb-4">
                           <label class="block text-gray-700 text-sm font-bold mb-2" for="topup-amount">Jumlah Topup</label>
@@ -21,7 +23,7 @@
                       <input type="hidden" id="price-input" name="price" value="">
 
     
-                      <!-- Payment Method -->
+                      {{-- <!-- Payment Method -->
                       <div class="mb-4">
                           <label class="block text-gray-700 text-sm font-bold mb-2" for="payment-method" name="payment">Metode Pembayaran</label>
                           <select id="payment-method" name="payment" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
@@ -29,7 +31,7 @@
                               <option value="credit-card">Credit Card</option>
                               <option value="e-wallet">E-Wallet</option>
                           </select>
-                      </div>
+                      </div> --}}
                       <!-- Other Form Fields -->
                       <div class="mb-4">
                           <label class="block text-gray-700 text-sm font-bold mb-2" for="username">Username</label>
