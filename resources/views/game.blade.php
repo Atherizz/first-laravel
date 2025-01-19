@@ -19,9 +19,16 @@
 
     <div class="bg-gray-100 min-h-screen flex items-center justify-center">
         <div class="bg-white p-12 rounded-lg shadow-md w-full max-w-2xl">
+            @auth
             <h1 class="text-3xl font-bold mb-8">
                 Choose your Game to Topup
             </h1>
+            @else
+            <h1 class="text-3xl font-bold mb-8">
+                Login to Top Up!
+            </h1>
+            @endauth
+            @auth
             <div class="grid grid-cols-2 gap-8">
                 @foreach ($category as $item)
                 <a class="block text-center" href="/game/order/{{ $item->slug }}">
@@ -32,6 +39,19 @@
                 </a>        
                 @endforeach
             </div>
+            @else
+            <div class="grid grid-cols-2 gap-8">
+                @foreach ($category as $item)
+                <p class="block text-center" href="/game/order/{{ $item->slug }}">
+                    <img alt="Logo Valorant" class="mx-auto mb-4" height="120" src="{{ asset('img/' . $item->img)  }}" width="120"/>
+                    <span class="text-gray-700 font-bold text-lg">
+                        {{ $item->name }}
+                    </span>
+                </p>        
+                @endforeach
+            </div>
+            @endauth
+
         </div>
     </div>
 </x-layout>

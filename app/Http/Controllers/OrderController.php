@@ -23,13 +23,14 @@ class OrderController extends Controller
             'game' => 'required',
             'value' => 'required',
             'price' => 'required',
-            'payment' => 'required',
             'username' => 'required',
-            'email' => 'required'
+            'email' => 'required',
+            'status' => 'required',
+            'user_id' => 'required'
         ]);
 
         Order::create($validate);
-        return redirect('/game')->with('success', 'Order Success, we will process early!');
+        return redirect('/cart')->with('success', 'Order Success, please pay the order early!');
     }
 
 
