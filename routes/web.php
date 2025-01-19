@@ -90,9 +90,8 @@ Route::get('/welcome', function () {
     return view('welcome');
 });
 
-Route::get('/cart', function () {
-    $carts = Order::latest();
-    $cart = $carts->where('id',auth()->User()->id);
+Route::get('/cart/{order:user_id}', function ($user_id) {
+    $cart = Order::where('user_id',$user_id)->get();
     return view('cart',[
         'title' => 'Order Cart',
         'cart' => $cart
