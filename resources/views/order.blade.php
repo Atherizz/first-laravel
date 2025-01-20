@@ -7,9 +7,9 @@
               <div class="bg-white p-6 rounded-lg shadow-md">
                   <form method="POST" action="/game/order">
                     @csrf
-                    <input type="hidden" id="game-input" name="game" value="{{ $title }}">
                     <input type="hidden" id="status" name="status" value="unpaid">
                     <input type="hidden" id="user_id" name="user_id" value="{{ auth()->User()->id }}">
+                    <input type="hidden" id="category_id" name="category_id" value="{{ $category_id }}">
                       <!-- Topup Amount -->
                       <div class="mb-4">
                           <label class="block text-gray-700 text-sm font-bold mb-2" for="topup-amount">Jumlah Topup</label>
@@ -40,7 +40,7 @@
                       </div>
                       <div class="mb-4">
                           <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Email</label>
-                          <input id="email" type="email" name="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="Masukkan email"/>
+                          <input id="email" type="email" name="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('email') is-invalid @enderror" value="{{ auth()->User()->email }}" readonly/>
                           @error('email')<div class="alert alert-danger"><p style="color: red; font-style:italic">{{ $message }}</p></div>@enderror
                       </div>
                       <!-- Order Button -->

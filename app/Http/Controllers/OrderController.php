@@ -12,6 +12,7 @@ class OrderController extends Controller
         return view('dashboard.order.index', [
             'title' => 'Manage Order',
             'order' => Order::all()
+            
         ]
     );
     }
@@ -20,17 +21,17 @@ class OrderController extends Controller
         // dd($request->all());
 
         $validate = $request->validate([
-            'game' => 'required',
             'value' => 'required',
             'price' => 'required',
             'username' => 'required',
             'email' => 'required',
             'status' => 'required',
-            'user_id' => 'required'
+            'user_id' => 'required',
+            'category_id' => 'required'
         ]);
 
         Order::create($validate);
-        return redirect('/cart')->with('success', 'Order Success, please pay the order early!');
+        return redirect('/cart')->with('success', 'Order Success, please check your cart');
     }
 
 

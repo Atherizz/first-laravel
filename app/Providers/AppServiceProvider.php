@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Order;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -33,6 +34,10 @@ class AppServiceProvider extends ServiceProvider
 
         Gate::define('create-post', function (User $user) {
             return $user;
+        });
+
+        Gate::define('user-cart', function (User $user, Order $order) {
+            return $user->id === $order->user->id;
         });
 
 

@@ -17,28 +17,40 @@
     </div>
     @endif
     
+
     <section class="bg-gray-50 py-8 antialiased dark:bg-gray-900 md:py-12">
         <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
           <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             <!-- Card 1 -->
             @foreach ($cart as $item)  
+            @can('user-cart', $item)
             <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+              <div class="h-56 w-full">
+                <a href="#">
+                  <img class="mx-auto h-full dark:hidden" src="{{ asset('img/' . $item->category->img) }}" alt="" />
+                  <img class="mx-auto hidden h-full dark:block" src="{{ asset('img/' . $item->category->img) }}" alt="" />
+                </a>
+              </div>
               <div class="pt-6">
                 <div class="mb-4 flex items-center justify-between gap-4">
-                  <span class="me-2 rounded bg-primary-100 px-2.5 py-0.5 text-xs font-medium text-primary-800 dark:bg-primary-900 dark:text-primary-300">{{$item->game}}</span>
+                  <span class="me-2 rounded bg-primary-100 px-2.5 py-0.5 text-xs font-medium text-primary-800 dark:bg-primary-900 dark:text-primary-300">{{$item->category->name}}</span>
                 </div>
-                <a href="#" class="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white">In Game Value : {{$item->value}}</a>
-                <div class="mt-2 flex items-center gap-2">
-                  <p class="text-sm font-medium text-gray-900 dark:text-white">{{$item->username}}</p>
-
-                </div>
+                <a href="#" class="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white">{{$item->value}} {{ $item->category->point }}</a>
+                <div class="mt-2 flex flex-col gap-2">
+                  <p class="text-sm font-medium text-gray-900 dark:text-white">Username : {{$item->username}}</p>
+                  <p class="text-sm font-medium text-gray-900 dark:text-white">Email : {{$item->email}}</p>
+              </div>
                 <div class="mt-4 flex items-center justify-between gap-4">
                   <p class="text-2xl font-extrabold leading-tight text-gray-900 dark:text-white">Rp. {{$item->price}}</p>
                   <button class="rounded-lg bg-primary-700 px-4 py-2 text-sm font-medium text-white hover:bg-primary-800">Pay Now</button>
                 </div>
               </div>
             </div>
+            @endcan
             @endforeach
+
+
+            
 </x-layout>
 <script>
   document.querySelectorAll('[data-dismiss="alert"]').forEach((button) => {

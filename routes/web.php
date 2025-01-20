@@ -82,7 +82,9 @@ Route::get('/game/order/{category:slug}', function (Category $category) {
     'title' => $category->name,
     'price' => $category->prices,
     'name' => 'Savero Athallah',
-    'point' => $category->point]);
+    'point' => $category->point,
+    'category_id' => $category->id
+]);
 });
 Route::post('/game/order', [OrderController::class, 'store']);
 
@@ -90,13 +92,22 @@ Route::get('/welcome', function () {
     return view('welcome');
 });
 
-Route::get('/cart/{order:user_id}', function ($user_id) {
-    $cart = Order::where('user_id',$user_id)->get();
+// Route::get('/cart/{order:user_id}', function ($user_id) {
+//     $cart = Order::where('user_id',$user_id)->get();
+//     return view('cart',[
+//         'title' => 'Order Cart',
+//         'cart' => $cart
+//         ]);
+// })->middleware('auth');
+
+Route::get('/cart', function () {
     return view('cart',[
         'title' => 'Order Cart',
-        'cart' => $cart
+        'cart' => Order::all()
         ]);
 })->middleware('auth');
+
+
 
 Route::get('/posts', function () {
     return view('posts', ['title' => 'Check Our Purchase Review', 'posts' => Post::filter(request(['search', 'category', 'author']))->latest()->paginate(4)->withQueryString()]);

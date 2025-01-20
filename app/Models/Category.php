@@ -18,4 +18,8 @@ class Category extends Model
     public function prices(): HasMany {
         return $this->hasMany(Price::class, 'id_game');
     }
+
+    public function orders(): HasMany {
+        return $this->hasMany(Order::class, 'id_game');
+    }
 }

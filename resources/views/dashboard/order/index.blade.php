@@ -20,7 +20,7 @@
                         <tbody>
                             @foreach ($order as $item)
                             <tr class="border-b dark:border-gray-700">
-                                <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $item->game }}</th>
+                                <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $item->category->name }}</th>
                                 <td class="px-4 py-3">{{ $item->value }}</td>
                                 <td class="px-4 py-3">{{ $item->price}}</td>
                                 <td class="px-4 py-3">{{ $item->username }}</td>
