@@ -44,7 +44,7 @@
                         <p class="text-gray-600"><span class="font-semibold">Email: </span>{{ $order->email }}</p>
                     </div>
                     <div class="flex justify-between items-center">
-                        <span class="text-2xl font-bold">{{ $order->price }}</span>
+                        <span class="text-2xl font-bold">Rp. {{ $order->price }}</span>
                     </div>
                 </div>
                 <div class="mt-6 text-center">

@@ -19,19 +19,21 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             UserSeeder::class,
-            CategorySeeder::class
+            CategorySeeder::class,
+            PriceSeeder::class,
+            PostSeeder::class
         ]);
 
-        Post::factory(20)->recycle
-            ([ 
-            User::all(),
-            Category::all()
-            ])->create();    
+        // Post::factory(20)->recycle
+        //     ([ 
+        //     User::all(),
+        //     Category::all()
+        //     ])->create();    
 
-        Price::factory(count: 32)->recycle
-            ([
-            Category::all()
-            ])->create();
+        // Price::factory(count: 32)->recycle
+        //     ([
+        //     Category::all()
+        //     ])->create();
 
     }
 }

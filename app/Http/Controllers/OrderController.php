@@ -15,7 +15,6 @@ class OrderController extends Controller
             [
                 'title' => 'Manage Order',
                 'order' => Order::all()
-
             ]
         );
     }
@@ -76,8 +75,6 @@ class OrderController extends Controller
         $statusCode = $request->status_code;
         $grossAmount = $request->gross_amount;
         $hashed = hash('sha512', $orderId . $statusCode . $grossAmount . $serverKey);
-
-        
 
         if ($hashed == $request->signature_key) {
             if ($request->transaction_status == 'capture' || $request->transaction_status == 'settlement') {
