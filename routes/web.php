@@ -22,8 +22,6 @@ use App\Models\Order;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 Route::get('/dashboard/posts/createSlug', [PostController::class, 'createSlug']);
-
-
 Route::get('/order-form', [OrderController::class, 'orderForm'])->name('order.form');
 
 Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
@@ -86,11 +84,14 @@ Route::get('/game/order/{category:slug}', function (Category $category) {
     'category_id' => $category->id
 ]);
 });
+
 Route::post('/game/order', [OrderController::class, 'store']);
 
 Route::get('/welcome', function () {
     return view('welcome');
 });
+
+Route::get('/invoice/{id}', [OrderController::class, 'invoice']);
 
 // Route::get('/cart/{order:user_id}', function ($user_id) {
 //     $cart = Order::where('user_id',$user_id)->get();
@@ -100,12 +101,12 @@ Route::get('/welcome', function () {
 //         ]);
 // })->middleware('auth');
 
-Route::get('/cart', function () {
-    return view('cart',[
-        'title' => 'Order Cart',
-        'cart' => Order::all()
-        ]);
-})->middleware('auth');
+// Route::get('/cart', function () {
+//     return view('cart',[
+//         'title' => 'Order Cart',
+//         'order' => Order::all()
+//         ]);
+// })->middleware('auth');
 
 
 

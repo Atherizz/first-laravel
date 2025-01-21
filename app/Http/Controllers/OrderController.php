@@ -53,7 +53,8 @@ class OrderController extends Controller
                 'gross_amount' => $order->price,
             ),
             'customer_details' => array(
-                'name' => $order->user->name,
+                'first_name' => $order->user->name,
+                'last_name' => '',
                 'email' => $order->user->email,
                 'phone' => $order->user->phone,
             ),
@@ -66,5 +67,35 @@ class OrderController extends Controller
             'order' => $order,
             'snapToken' => $snapToken
             ]);
+    }
+
+    public function callback(Request $request) {
+        $serverKey = config('midtrans.server_key');
+        $grossAmount = floatval($request->gross_amount);
+        $orderId = $request->order_id;
+        $statusCode = $request->status_code;
+        $grossAmount = $request->gross_amount;
+        $hashed = hash('sha512', $orderId . $statusCode . $grossAmount . $serverKey);
+
+        
+
+        if ($hashed == $request->signature_key) {
+            if ($request->transaction_status == 'capture' || $request->transaction_status == 'settlement') {
+                $order = Order::find($request->order_id);
+                $order->update(['status' => 'paid']);
+            }
+        }
+    }
+
+    public function invoice($id)
+    {
+        $order = Order::find($id);
+        return view(
+            'invoice',
+            [
+                'title' => 'Invoice',
+                'order' => $order
+            ]
+        );
     }
 }

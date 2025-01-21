@@ -109,7 +109,7 @@
       window.snap.embed('{{ $order->snap_token }}', {
           embedId: 'snap-container',
           onSuccess: function(result) {
-              alert("payment success!");
+              window.location.href = '/invoice/{{ $order->id }}'
               console.log(result);
               closeModal();
           },
