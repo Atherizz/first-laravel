@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class OrderController extends Controller
 {
@@ -15,6 +16,7 @@ class OrderController extends Controller
             [
                 'title' => 'Manage Order',
                 'order' => Order::all()
+
             ]
         );
     }
@@ -76,6 +78,8 @@ class OrderController extends Controller
         $grossAmount = $request->gross_amount;
         $hashed = hash('sha512', $orderId . $statusCode . $grossAmount . $serverKey);
 
+        
+
         if ($hashed == $request->signature_key) {
             if ($request->transaction_status == 'capture' || $request->transaction_status == 'settlement') {
                 $order = Order::find($request->order_id);
@@ -87,6 +91,15 @@ class OrderController extends Controller
     public function invoice($id)
     {
         $order = Order::find($id);
+
+        if(request('output') == 'pdf') {
+            $pdf = Pdf::loadView('invoice_pdf',
+            [
+                'order' => $order
+            ]);
+            return $pdf->download('invoice.pdf');
+        }
+
         return view(
             'invoice',
             [
@@ -95,4 +108,6 @@ class OrderController extends Controller
             ]
         );
     }
+
+    
 }
