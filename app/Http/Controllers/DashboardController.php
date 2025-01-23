@@ -76,8 +76,4 @@ class DashboardController extends Controller
 
         return redirect('/dashboard/profile')->with('success', 'Profile picture has been deleted!');
     }
-
-
-
-
 }
