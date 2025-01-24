@@ -101,28 +101,29 @@ class OrderController extends Controller
             return $pdf->download('invoice.pdf');
         }
 
-        if(request('output') == 'send-wa') {
+        $phoneNumber = preg_replace('/^0/', '62', $order->user->phone);
+
+        $message = "Konfirmasi Transaksi Top Up Rizz Gamelab 🎮
+
+Terima kasih telah melakukan top up!
+
+📱 Game: {$order->category->name}
+💰 Jumlah Top Up: {$order->value}
+💰 Harga: Rp. {$order->price}
+👤 Username/ID: {$order->username}
+
+Kami akan segera memproses transaksi Anda. Silakan tunggu konfirmasi selanjutnya.
+
+Terima kasih!
+Rizz Gamelab Team";
+
         Http::withHeaders([
             'Authorization' => 'C5oS3XEhiUwfn51Jcws1'
         ])->post('https://api.fonnte.com/send', [
-            'target' => $order->user->phone . '|' . $order->user->name,
-            'message' => 'Konfirmasi Transaksi Top Up Rizz Gamelab 🎮
-    
-                        Terima kasih telah melakukan top up!
-    
-                        📱 Game: ' . $order->category->name . 
-                        '💰 Jumlah Top Up:' . $order->value. 
-                        '💰 Harga: Rp. ' . $order->price. 
-                        '👤 Username/ID: ' . $order->username . 
-                        '📧 Email: ' . $order->email . 
-    
-                        'Kami akan segera memproses transaksi Anda. Silakan tunggu konfirmasi selanjutnya.
-    
-                        Terima kasih!
-                        Rizz Gamelab Team',
+            'target' => $phoneNumber . '|' . $order->user->name,
+            'message' => $message
         ]);
-    }
-
+        
         return view(
             'invoice',
             [
