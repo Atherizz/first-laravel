@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SiteController;
+use Illuminate\Support\Facades\Password;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\OrderController;
@@ -32,17 +33,30 @@ Route::get('/login', [LoginController::class, 'index'])->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
 
+Route::get('/forgot-password', function () {
+    return view('auth.forgot-password', ['title' => 'Forgot Password']);
+})->middleware('guest')->name('password.request');
+
+Route::post('/forgot-password', [LoginController::class, 'forgotPassword'])->middleware('guest')->name('password.email');
+
+Route::get('/reset-password/{token}', function (string $token) {
+    return view('auth.reset-password', ['token' => $token, 'title' => 'Forgot Password']);
+})->middleware('guest')->name('password.reset');
+
+Route::post('/reset-password', [LoginController::class, 'resetPassword'])->middleware('guest');
+
+
 Route::middleware('auth')->group(function () {
     Route::get('/email/verify', function () {
         return view('auth.verify-email');
     })->middleware('auth')->name('verification.notice');    
     
-    Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
         $request->fulfill();
         return redirect('/dashboard');
     })->middleware(['auth', 'signed'])->name('verification.verify');
      
-    Route::post('/email/verification-notification', function (Request $request) {
+Route::post('/email/verification-notification', function (Request $request) {
         $request->user()->sendEmailVerificationNotification();
         return back()->with('message', 'Verification link sent!');
     })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
