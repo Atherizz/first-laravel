@@ -2,10 +2,12 @@
 
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Order;
 use App\Models\Price;
 use App\Models\Category;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\PostController;
@@ -18,7 +20,6 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PricelistController;
-use App\Models\Order;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 Route::get('/dashboard/posts/createSlug', [PostController::class, 'createSlug']);
@@ -92,6 +93,10 @@ Route::get('/welcome', function () {
 });
 
 Route::get('/invoice/{id}', [OrderController::class, 'invoice']);
+
+// Route::get('/invoice/{id}', function ($id) {
+//     $order = Order::findOrFail($id);
+// })->middleware('auth');
 
 // Route::get('/cart/{order:user_id}', function ($user_id) {
 //     $cart = Order::where('user_id',$user_id)->get();

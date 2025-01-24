@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Http;
 
 class OrderController extends Controller
 {
@@ -99,6 +100,28 @@ class OrderController extends Controller
             ]);
             return $pdf->download('invoice.pdf');
         }
+
+        if(request('output') == 'send-wa') {
+        Http::withHeaders([
+            'Authorization' => 'C5oS3XEhiUwfn51Jcws1'
+        ])->post('https://api.fonnte.com/send', [
+            'target' => $order->user->phone . '|' . $order->user->name,
+            'message' => 'Konfirmasi Transaksi Top Up Rizz Gamelab 🎮
+    
+                        Terima kasih telah melakukan top up!
+    
+                        📱 Game: ' . $order->category->name . 
+                        '💰 Jumlah Top Up:' . $order->value. 
+                        '💰 Harga: Rp. ' . $order->price. 
+                        '👤 Username/ID: ' . $order->username . 
+                        '📧 Email: ' . $order->email . 
+    
+                        'Kami akan segera memproses transaksi Anda. Silakan tunggu konfirmasi selanjutnya.
+    
+                        Terima kasih!
+                        Rizz Gamelab Team',
+        ]);
+    }
 
         return view(
             'invoice',
